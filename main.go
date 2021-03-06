@@ -33,6 +33,7 @@ func main() {
 	)
 
 	p := pat.New()
+	// halaman output
 	p.Get("/auth/{provider}/callback", func(res http.ResponseWriter, req *http.Request) {
 
 		user, err := gothic.CompleteUserAuth(res, req)
@@ -44,10 +45,12 @@ func main() {
 		t.Execute(res, user)
 	})
 
+	// pilihan account
 	p.Get("/auth/{provider}", func(res http.ResponseWriter, req *http.Request) {
 		gothic.BeginAuthHandler(res, req)
 	})
-
+	
+	// halaman awal login
 	p.Get("/", func(res http.ResponseWriter, req *http.Request) {
 		t, _ := template.ParseFiles("templates/index.html")
 		t.Execute(res, false)
